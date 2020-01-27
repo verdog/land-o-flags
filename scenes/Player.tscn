@@ -1,0 +1,127 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://scenes/Player.gd" type="Script" id=1]
+[ext_resource path="res://scenes/Flag_Mount_R.gd" type="Script" id=2]
+[ext_resource path="res://art/man/man1.png" type="Texture" id=3]
+[ext_resource path="res://art/man/man2.png" type="Texture" id=4]
+[ext_resource path="res://scenes/Sword.gd" type="Script" id=5]
+[ext_resource path="res://art/sword/sword.png" type="Texture" id=6]
+[ext_resource path="res://sound/sword.wav" type="AudioStream" id=7]
+[ext_resource path="res://art/arrow/arrow.png" type="Texture" id=8]
+[ext_resource path="res://scenes/Arrow.gd" type="Script" id=9]
+[ext_resource path="res://sound/jump.wav" type="AudioStream" id=10]
+[ext_resource path="res://sound/hit.mp3.wav" type="AudioStream" id=11]
+[ext_resource path="res://sound/plant.mp3.wav" type="AudioStream" id=12]
+[ext_resource path="res://art/stars/sprites1.png" type="Texture" id=13]
+[ext_resource path="res://art/stars/sprites2.png" type="Texture" id=14]
+[ext_resource path="res://art/stars/sprites3.png" type="Texture" id=15]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ) ],
+"loop": true,
+"name": "run",
+"speed": 14.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 6.0
+height = 3.5
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 5.0
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ) ],
+"loop": true,
+"name": "default",
+"speed": 20.0
+} ]
+
+[node name="Player" type="KinematicBody2D"]
+z_index = 1
+collision_layer = 2
+script = ExtResource( 1 )
+gravity = Vector2( 0, 20 )
+acceleration_x = Vector2( 14, 0 )
+acceleration_jump = Vector2( 0, -256 )
+
+[node name="Flag_Mount_R" type="Position2D" parent="."]
+position = Vector2( 4.49686, -2.94846 )
+script = ExtResource( 2 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "idle"
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+smoothing_speed = 100.0
+drag_margin_left = 0.05
+drag_margin_right = 0.05
+editor_draw_screen = false
+editor_draw_drag_margin = true
+
+[node name="Sword" type="Node2D" parent="."]
+editor/display_folded = true
+position = Vector2( -4.53198, 5.61301 )
+script = ExtResource( 5 )
+
+[node name="Sprite" type="Sprite" parent="Sword"]
+position = Vector2( 7.28235, -7.25117 )
+texture = ExtResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="Sword"]
+position = Vector2( 4.92084, -5.65614 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword/Area2D"]
+shape = SubResource( 3 )
+
+[node name="swing" type="AudioStreamPlayer" parent="Sword"]
+stream = ExtResource( 7 )
+
+[node name="Sword_Mount" type="Position2D" parent="."]
+position = Vector2( -4.54238, 5.60885 )
+
+[node name="Damage_Timer" type="Timer" parent="."]
+wait_time = 1.5
+
+[node name="Arrow" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -0.0431299 )
+z_index = 10
+texture = ExtResource( 8 )
+offset = Vector2( 37.7816, 0.0431299 )
+script = ExtResource( 9 )
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="Hit_Enemy" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+
+[node name="Stars" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 0, -8.27588 )
+frames = SubResource( 4 )
+playing = true
+[connection signal="frame_changed" from="AnimatedSprite" to="Sword" method="_on_AnimatedSprite_frame_changed"]
+[connection signal="frame_changed" from="AnimatedSprite" to="Flag_Mount_R" method="_on_AnimatedSprite_frame_changed"]
+[connection signal="body_entered" from="Sword/Area2D" to="Sword" method="_on_Area2D_body_entered"]
+[connection signal="timeout" from="Damage_Timer" to="." method="_on_Damage_Timer_timeout"]

@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scenes/Enemy_Base.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scenes/enemies/Enemy_Phrog.gd" type="Script" id=2]
+[ext_resource path="res://art/phrog/phrog.png" type="Texture" id=3]
+[ext_resource path="res://sound/jump.mp3.wav" type="AudioStream" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 253.111, 181.928 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 6.08659
+
+[node name="Enemy_Phrog" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="." index="0"]
+position = Vector2( 0, -1.19328 )
+texture = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="1"]
+position = Vector2( 0, 1.35675 )
+
+[node name="Activation" parent="." index="2"]
+visible = true
+
+[node name="CollisionShape2D" parent="Activation" index="0"]
+shape = SubResource( 1 )
+
+[node name="CollisionShape2D" parent="Hurtbox" index="0"]
+shape = SubResource( 2 )
+
+[node name="Yump" type="Timer" parent="." index="4"]
+wait_time = 3.0
+autostart = true
+
+[node name="Jump" type="AudioStreamPlayer" parent="." index="5"]
+stream = ExtResource( 4 )
+volume_db = -8.078
+[connection signal="timeout" from="Yump" to="." method="_on_Yump_timeout"]

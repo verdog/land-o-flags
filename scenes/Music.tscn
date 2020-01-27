@@ -1,0 +1,22 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/Music.gd" type="Script" id=1]
+[ext_resource path="res://sound/music/title.wav" type="AudioStream" id=2]
+[ext_resource path="res://sound/music/bg1.wav" type="AudioStream" id=3]
+[ext_resource path="res://sound/music/bg2.wav" type="AudioStream" id=4]
+[ext_resource path="res://sound/music/win.wav" type="AudioStream" id=5]
+
+[node name="Music" type="Node2D"]
+script = ExtResource( 1 )
+
+[node name="Title" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+
+[node name="Bg1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="Bg2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="Win" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
