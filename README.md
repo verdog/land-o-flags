@@ -12,7 +12,7 @@ This was a game jam game, so the directory structure is messy, there are some un
 
 ### art
 
-Game art - sprites, tilesets, and generally everything with graphics
+Game art - sprites, tilesets, buttons, etc.
 
 ### fonts
 
