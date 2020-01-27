@@ -4,7 +4,7 @@ Land O' Flags is my submission to [CCAWJAM3](https://itch.io/jam/ccawjam-3).
 
 ## Technical info
 
-Land O' Flags was made in [Godot](https://itch.io/jam/ccawjam-3) 3.2 on Linux. You should be able to import the project into the engine using the files in this repository. On the projects list screen in Godot (the screen the engine starts at upon startup) select "Import" and choose the `project.godot` file that is in this directory.
+Land O' Flags was made in [Godot](https://godotengine.org/) 3.2 on Linux. You should be able to import the project into the engine using the files in this repository. On the projects list screen in Godot (the screen the engine starts at upon startup) select "Import" and choose the `project.godot` file that is in this directory.
 
 ## Directory Structure
 
